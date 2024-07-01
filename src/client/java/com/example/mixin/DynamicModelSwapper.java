@@ -33,8 +33,10 @@ public class DynamicModelSwapper {
         at=@At("HEAD"), cancellable=true)
     private void getDynamicModel(ItemStack stack, CallbackInfoReturnable<BakedModel> info){
         if(Registries.ITEM.getId(stack.getItem()).equals(itemIdentifier)) {
-            URLSprite urlSprite = new URLSprite("https://raw.githubusercontent.com/SamsTheNerd/cobblecards/main/common/src/main/resources/assets/cobblecards/textures/item/cobblecard.png", Identifier.of("infinitecraft", "item/chatgpt"));
-            if (!urlSprite.getTextureId().equals(Identifier.of(""))) {
+            URLSprite urlSprite = new URLSprite("https://raw.githubusercontent.com/SamsTheNerd/cobblecards/main/common/src/main/resources/assets/cobblecards/textures/item/cobblecard.png", Identifier.of("minecraft", "item/diamond"));
+            Identifier spriteId = urlSprite.getTextureId();
+            System.out.println(spriteId);
+            if (!spriteId.equals(Identifier.of(""))) {
                 Identifier spriteIdentifier = urlSprite.getTextureId();
                 DynamicModelOverride override = new DynamicModelOverride(Identifier.of("infinitecraft", "chatgpt"), false, List.of(spriteIdentifier));
                 BakedModel model = override.getBakedModel(modelManager);

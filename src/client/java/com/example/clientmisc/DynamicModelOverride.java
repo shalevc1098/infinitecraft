@@ -64,33 +64,43 @@ public class DynamicModelOverride {
 
     @Nullable
     public BakedModel getBakedModel(BakedModelManager modelManager){
+        System.out.println(1);
         return getBakedModel(modelManager, 0);
     }
 
     @Nullable
     private BakedModel getBakedModel(BakedModelManager modelManager, int nests){
+        System.out.println(2);
         if(nests > 10){
             return null; // to prevent infinite loops
         }
+        System.out.println(3);
         if(!resourcesExist()){
             if(fallback != null){
                 return fallback.getBakedModel(modelManager, nests + 1);
             }
             return null;
         }
+        System.out.println(4);
         if(fromJson){
+            System.out.println(5);
             BakedModel model = modelManager.getModel(new ModelIdentifier(id, "inventory"));
-            if(model != modelManager.getMissingModel()){
+             if(model != modelManager.getMissingModel()){
                 return model;
             }
         } else {
+            System.out.println(6);
             if(bakedModelsFromTextures.containsKey(id)) return bakedModelsFromTextures.get(id);
+            System.out.println(7);
             JsonUnbakedModel jsonModel = makeUnbakedModel();
+            System.out.println(8);
 //            CobbleCards.logPrint("successfully parsed jsonModel? (" + jsonModel.id + "): " + jsonModel.toString());
 //            CobbleCards.logPrint("root model: " + jsonModel.getRootModel());
             BakedModel bakedModel = jsonModel.bake(null, DynamicModelOverride::spriteLoader, ModelRotation.X0_Y0);
+            System.out.println(9);
 //            CobbleCards.logPrint("baked the model: " + bakedModel.toString());
             bakedModelsFromTextures.put(id, bakedModel);
+            System.out.println(10);
             return bakedModel;
         }
         return null;
