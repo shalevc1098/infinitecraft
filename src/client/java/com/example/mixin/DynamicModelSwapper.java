@@ -34,11 +34,13 @@ public class DynamicModelSwapper {
     private void getDynamicModel(ItemStack stack, CallbackInfoReturnable<BakedModel> info){
         if(Registries.ITEM.getId(stack.getItem()).equals(itemIdentifier)) {
             URLSprite urlSprite = new URLSprite("https://cdn.sstatic.net/Img/home/illo-home-hero.png?v=4718e8f857c5", Identifier.of("infinitecraft", "item/chatgpt"));
-            Identifier spriteIdentifier = urlSprite.getTextureId();
-            DynamicModelOverride override = new DynamicModelOverride(Identifier.of("infinitecraft", "chatgpt"), false, List.of(spriteIdentifier));
-            BakedModel model = override.getBakedModel(modelManager);
-            if(model != null){
-                info.setReturnValue(model);
+            if (!urlSprite.getTextureId().equals(Identifier.of(""))) {
+                Identifier spriteIdentifier = urlSprite.getTextureId();
+                DynamicModelOverride override = new DynamicModelOverride(Identifier.of("infinitecraft", "chatgpt"), false, List.of(spriteIdentifier));
+                BakedModel model = override.getBakedModel(modelManager);
+                if(model != null){
+                    info.setReturnValue(model);
+                }
             }
         }
     }
