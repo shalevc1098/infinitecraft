@@ -150,14 +150,9 @@ public class DynamicModelOverride {
     }
 
     public static boolean hasTexture(Identifier textureId){
-        boolean isPresent = false;
-        if (!textureId.getPath().isEmpty()) {
-            Identifier resourceId = Identifier.of(textureId.getNamespace(), "textures/" + textureId.getPath() + ".png");
-            Optional<AbstractTexture> maybeTexture = Optional.ofNullable(MinecraftClient.getInstance().getTextureManager().getTexture(resourceId));
-            isPresent = maybeTexture.isPresent();
-        }
-
-        return isPresent;
+        Identifier resourceId = Identifier.of(textureId.getNamespace(), "textures/" + textureId.getPath() + ".png");
+        Optional<Resource> maybeTexture = MinecraftClient.getInstance().getResourceManager().getResource(resourceId);
+        return maybeTexture.isPresent();
     }
 
     public static boolean hasModel(Identifier modelId){
