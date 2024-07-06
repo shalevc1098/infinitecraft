@@ -3,6 +3,7 @@ package com.example.mixin;
 import com.example.clientmisc.DynamicModelOverride;
 import com.example.interfaces.IDynamicModelItem;
 import com.example.utils.URLSprite;
+import net.minecraft.client.render.model.json.ModelOverrideList;
 import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
 import org.spongepowered.asm.mixin.Final;
@@ -29,21 +30,15 @@ public class DynamicModelSwapper {
     @Final
     private BakedModelManager modelManager;
 
-    @Inject(method= "getModel(Lnet/minecraft/item/ItemStack;)Lnet/minecraft/client/render/model/BakedModel;",
-        at=@At("HEAD"), cancellable=true)
-    private void getDynamicModel(ItemStack stack, CallbackInfoReturnable<BakedModel> info){
-        if(Registries.ITEM.getId(stack.getItem()).equals(itemIdentifier)) {
-            URLSprite urlSprite = new URLSprite("https://raw.githubusercontent.com/SamsTheNerd/cobblecards/main/common/src/main/resources/assets/cobblecards/textures/item/cobblecard.png", Identifier.of("minecraft", "item/diamond"));
-            Identifier spriteId = urlSprite.getTextureId();
-            System.out.println(spriteId);
-            if (!spriteId.equals(Identifier.of(""))) {
-                Identifier spriteIdentifier = urlSprite.getTextureId();
-                DynamicModelOverride override = new DynamicModelOverride(Identifier.of("infinitecraft", "chatgpt"), false, List.of(spriteIdentifier));
-                BakedModel model = override.getBakedModel(modelManager);
-                if(model != null){
-                    info.setReturnValue(model);
-                }
-            }
-        }
+    @Inject(method = "getModel(Lnet/minecraft/item/ItemStack;)Lnet/minecraft/client/render/model/BakedModel;",
+            at = @At("HEAD"), cancellable = true)
+    private void getDynamicModel(ItemStack stack, CallbackInfoReturnable<BakedModel> info) {
+//        if (Registries.ITEM.getId(stack.getItem()).equals(itemIdentifier)) {
+//            DynamicModelOverride override = new DynamicModelOverride(Identifier.of("infinitecraft", "chatgpt"), false, List.of(Identifier.of("infinitecraft", "item/chatgpt")));
+//            BakedModel model = override.getBakedModel(modelManager);
+//            if (model != null) {
+//                info.setReturnValue(model);
+//            }
+//        }
     }
 }

@@ -1,6 +1,6 @@
 package com.example.loaders;
 
-import com.example.FourSidedFurnaceModel;
+import com.example.DynamicItemModel;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.model.loading.v1.ModelLoadingPlugin;
@@ -13,16 +13,16 @@ public class TutorialModelLoadingPlugin implements ModelLoadingPlugin {
 
     @Override
     public void onInitializeModelLoader(Context pluginContext) {
-//        // We want to add our model when the models are loaded
-//        pluginContext.modifyModelOnLoad().register((original, context) -> {
-//            // This is called for every model that is loaded, so make sure we only target ours
-//            ModelIdentifier modelIdentifier = context.topLevelId();
-//            if(modelIdentifier != null && modelIdentifier.equals(FOUR_SIDED_FURNACE_MODEL)) {
-//                return new FourSidedFurnaceModel();
-//            } else {
-//                // If we don't modify the model we just return the original as-is
-//                return original;
-//            }
-//        });
+        // We want to add our model when the models are loaded
+        pluginContext.modifyModelOnLoad().register((original, context) -> {
+            // This is called for every model that is loaded, so make sure we only target ours
+            ModelIdentifier modelIdentifier = context.topLevelId();
+            if(modelIdentifier != null && modelIdentifier.equals(FOUR_SIDED_FURNACE_MODEL)) {
+                return new DynamicItemModel();
+            } else {
+                // If we don't modify the model we just return the original as-is
+                return original;
+            }
+        });
     }
 }
